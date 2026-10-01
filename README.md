@@ -17,24 +17,70 @@ code CHOMPI Club released as open source
 ([CHOMPI-Club/CHOMPI](https://github.com/CHOMPI-Club/CHOMPI), MIT), not an
 official CHOMPI Club release; see [Credits](#credits).
 
-## The knobs
+## What it is
+
+A **clock-synced glitch delay**. Chase Bliss's guide calls it TEMPO's "Dual
+Delay" and the firmware file is `granularDelay.h`, but it is not a cloud of tiny
+grains:
+
+- **The base** is one stereo delay line whose interval is a clock division of
+  Move's tempo. Left and right read about 20 ms and 10 ms apart, for width.
+  With Random at 0 it is a plain tempo-synced echo (plus reverb on the up side).
+- **The "granular" part** is two read heads that crossfade. On every ⅛-note
+  clock step, Random is the chance that the delay jumps to a fresh head playing
+  the buffer back differently: retriggered, reversed, an octave up (double
+  speed) or an octave down (half speed). Each "grain" is a whole echo long,
+  with ~20 ms crossfades: closer to a stutter delay than to Clouds.
+- **Shimmer, sort of.** The repeats are fed back into the buffer, so an
+  octave-up repeat is pitched up again on the next pass, and on the up side the
+  reverb smears it. With Random and Feedback up, that is a clock-synced shimmer.
+
+## The Wand
+
+**Centre is off**, and the effect passes audio untouched. Off centre the echo
+fades in at its longest interval; the further you turn, the shorter it gets.
+
+| Wand | Interval (at Move's tempo) |
+|---|---|
+| just off centre | 1 bar |
+| | ½ note |
+| | dotted ¼ |
+| | ¼ |
+| | dotted ⅛ |
+| | ¼ triplet |
+| | ⅛ |
+| | ⅛ triplet |
+| fully down / up | 1/16 |
+
+- **Down (left): a clean delay.** Random here makes the echo jump an octave up
+  or down, play backwards, or retrigger: a fill.
+- **Up (right): the same intervals melting into reverb.** Just past centre the
+  diffusion reverb comes in; the further up, the more the echo becomes wash.
+  Random here gives octave-up echoes panned at random: a shimmer or smear.
+
+## The other knobs
 
 | Knob | What it does |
 |---|---|
-| **Wand** | Centre is off (and the effect passes audio untouched). **Left:** a clock-synced echo; the further left, the shorter the interval, in TEMPO's steps (2, 1, 3/4, 1/2, 3/8, 1/3, 1/4, 1/6, 1/8 of its delay cycle). **Right:** the same intervals, increasingly blended into diffusion reverb |
-| **Random** | Probability of a random event on each eighth note. Left side: the echo jumps an octave up or down, reverses, or retriggers. Right side: octave-up echoes panned at random, close to a granular smear |
+| **Random** | The chance of a random event on each ⅛ note (see above) |
 | **Feedback** | Repeats. Past about 60 % the input starts ducking the repeats: play and they step aside, stop and they swell back |
 | **Mix** | Dry to wet. Centre is both at full |
-| **Freeze** | Locks what is in the buffer and loops it; the Wand still moves it through the intervals. The delay must be on |
-| **Clock** | Runs the effect at half, normal or double Move's tempo |
+| **Freeze** | Stops recording and loops what is in the buffer, cut to the current interval; the Wand still moves it through the intervals. Needs the Wand off centre. Down: a crisp loop. Up: a blurred one |
+| **Clock** | Runs the intervals at half, normal or double Move's tempo |
 
 **The clock.** The intervals follow Move's tempo. While Move's transport runs,
 the random events land on its beat; while it is stopped the effect runs free at
 the set tempo. Below 40 BPM the effect holds 40 (its buffer is 10 seconds).
 
+**One quirk, kept from the CHOMPI:** the delay keeps recording even with the
+Wand at centre, so turning it on brings back the last few seconds of what went
+through rather than starting from silence.
+
 **Try this:**
-- Turn **Random** up on the left side with a long interval: an echo that
+- Turn **Random** up on the down side with a long interval: an echo that
   occasionally answers an octave down or backwards, like a drum fill.
+- Up side, **Random** and **Feedback** both high on a sustained sound: the
+  octave-up repeats climb and smear.
 - Find a loop you like, **Freeze** it, then sweep the **Wand** through the
   intervals: the frozen buffer restarts at each one.
 - **Feedback** past 60 % on a pad: the repeats only come up in the gaps.

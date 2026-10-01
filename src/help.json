@@ -5,29 +5,30 @@
       "title": "Overview",
       "lines": [
         "CHOMPI TEMPO's",
-        "Magic Wand effect.",
+        "Magic Wand effect:",
+        "a clock-synced",
+        "glitch delay.",
         "",
         "Wand: centre off.",
-        "Left: a delay in",
-        "time with Move,",
-        "shorter further",
-        "left. Right: the",
-        "echo melts into",
-        "reverb."
+        "Down: a delay,",
+        "1 bar near centre",
+        "to 1/16 at the end.",
+        "Up: same, melting",
+        "into reverb."
       ]
     },
     {
       "title": "Knobs",
       "lines": [
-        "Random: octave,",
-        "reverse and pan",
-        "events.",
-        "Feedback: repeats;",
-        "past 60% new sound",
-        "ducks them.",
+        "Random: chance per",
+        "1/8 of an octave,",
+        "reverse or pan",
+        "jump.",
+        "Feedback: past 60%",
+        "new sound ducks it.",
         "Mix: dry to wet.",
-        "Freeze: loop what",
-        "is in the buffer.",
+        "Freeze: loop the",
+        "buffer (Wand on).",
         "Clock: 1/2x-2x."
       ]
     }
