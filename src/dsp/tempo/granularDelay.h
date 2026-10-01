@@ -380,7 +380,10 @@ class granularDelay {
 
         if (mute_) {
             if (bufferClearDownXfade.isRunning()) {
-                bufferClearDownXfade.Process(&muteEnv, nullptr, nullptr);
+                bool done = false; // Munchi: the firmware passed nullptr here, and
+                // TO_ZERO writes it at the end of the fade -- a store to
+                // address 0, harmless on the CHOMPI's flash, a crash here
+                bufferClearDownXfade.Process(&muteEnv, nullptr, &done);
             }
             else if (!bufferClearUpXfade.isRunning()) {
                 muteEnv = 0.f;
