@@ -27,7 +27,6 @@ official CHOMPI Club release; see [Credits](#credits).
 | **Mix** | Dry to wet. Centre is both at full |
 | **Freeze** | Locks what is in the buffer and loops it; the Wand still moves it through the intervals. The delay must be on |
 | **Clock** | Runs the effect at half, normal or double Move's tempo |
-| **Thaw** | What happens on unfreeze: **Now**, the repeats come straight back; **Gap**, they drop out for one interval and fade back in (TEMPO's "Delay Buffer Unfreeze Mute") |
 
 **The clock.** The intervals follow Move's tempo. While Move's transport runs,
 the random events land on its beat; while it is stopped the effect runs free at

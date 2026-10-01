@@ -21,15 +21,14 @@
             {"key": "feedback", "name": "Feedback", "type": "float", "min": 0, "max": 1, "default": 0.3, "step": 0.01, "unit": "%"},
             {"key": "mix", "name": "Mix", "type": "float", "min": 0, "max": 1, "default": 0.5, "step": 0.01, "unit": "%"},
             {"key": "freeze", "name": "Freeze", "type": "enum", "options": ["Off", "On"], "default": 0},
-            {"key": "clock", "name": "Clock", "type": "enum", "options": ["1/2x", "1x", "2x"], "default": 1},
-            {"key": "unfreeze_mute", "name": "Thaw", "type": "enum", "options": ["Now", "Gap"], "default": 0}
+            {"key": "clock", "name": "Clock", "type": "enum", "options": ["1/2x", "1x", "2x"], "default": 1}
         ],
         "ui_hierarchy": {
             "levels": {
                 "root": {
                     "name": "Munchi Delay",
-                    "params": ["wand", "random", "feedback", "mix", "freeze", "clock", "unfreeze_mute"],
-                    "knobs": ["wand", "random", "feedback", "mix", "freeze", "clock", "unfreeze_mute"]
+                    "params": ["wand", "random", "feedback", "mix", "freeze", "clock"],
+                    "knobs": ["wand", "random", "feedback", "mix", "freeze", "clock"]
                 }
             }
         }

@@ -75,7 +75,11 @@ static const ParamDef kDefs[K_COUNT] = {
 };
 static const char *kOnOff[2]  = {"Off", "On"};
 static const char *kClock[3]  = {"1/2x", "1x", "2x"};
-static const char *kThaw[2]   = {"Now", "Gap"}; // TEMPO's "Delay Buffer Unfreeze Mute"
+static const char *kThaw[2]   = {"Off", "On"};
+/* unfreeze_mute is TEMPO's options.json "Delay Buffer Unfreeze Mute" (off by
+ * default there too). It is not on the knob page -- it acts only at the
+ * instant of unfreezing and read as a button that did nothing -- but it is
+ * still a parameter, and kept in the state. */
 static const float kClockMul[3] = {.5f, 1.f, 2.f};
 
 struct MunchiDelay

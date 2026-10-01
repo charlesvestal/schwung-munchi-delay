@@ -96,7 +96,7 @@ int main(int argc, char **argv)
     // 3b. Thaw = Gap: unfreezing mutes the repeats for an interval. The
     // firmware's mute fade wrote through a null pointer when it ended; on
     // the CHOMPI a harmless store to flash, here a crash.
-    api->set_param(fx, "unfreeze_mute", "Gap");
+    api->set_param(fx, "unfreeze_mute", "On");
     api->set_param(fx, "freeze", "0");
     double gap_energy = 0;
     for(int b = 0; b < 100; b++)
@@ -107,7 +107,7 @@ int main(int argc, char **argv)
             gap_energy += (double)blk[i] * blk[i];
     }
     check("thaw gap: silent after unfreeze, no crash", gap_energy == 0);
-    api->set_param(fx, "unfreeze_mute", "Now");
+    api->set_param(fx, "unfreeze_mute", "Off");
 
     // 4. right side: reverb tail on a click
     api->set_param(fx, "freeze", "0");
