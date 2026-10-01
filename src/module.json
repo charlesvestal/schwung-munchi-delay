@@ -1,0 +1,37 @@
+{
+    "id": "munchi-delay",
+    "name": "Munchi Delay",
+    "abbrev": "MDLY",
+    "version": "0.1.0",
+    "description": "CHOMPI TEMPO's Magic Wand effect: a delay synced to Move's tempo that, turned the other way, melts into diffusion reverb. Random octave, reverse and pan events, a buffer freeze, and repeats that duck under new material.",
+    "author": "CHOMPI Club / Chase Bliss (CHOMPI TEMPO, MIT) · port: charlesvestal",
+    "license": "MIT",
+    "component_type": "audio_fx",
+    "dsp": "munchi-delay.so",
+    "api_version": 2,
+    "capabilities": {
+        "audio_out": true,
+        "audio_in": true,
+        "midi_in": false,
+        "chainable": true,
+        "component_type": "audio_fx",
+        "chain_params": [
+            {"key": "wand", "name": "Wand", "type": "float", "min": -1, "max": 1, "default": 0, "step": 0.02},
+            {"key": "random", "name": "Random", "type": "float", "min": 0, "max": 1, "default": 0, "step": 0.01, "unit": "%"},
+            {"key": "feedback", "name": "Feedback", "type": "float", "min": 0, "max": 1, "default": 0.3, "step": 0.01, "unit": "%"},
+            {"key": "mix", "name": "Mix", "type": "float", "min": 0, "max": 1, "default": 0.5, "step": 0.01, "unit": "%"},
+            {"key": "freeze", "name": "Freeze", "type": "enum", "options": ["Off", "On"], "default": 0},
+            {"key": "clock", "name": "Clock", "type": "enum", "options": ["1/2x", "1x", "2x"], "default": 1},
+            {"key": "unfreeze_mute", "name": "Thaw", "type": "enum", "options": ["Now", "Gap"], "default": 0}
+        ],
+        "ui_hierarchy": {
+            "levels": {
+                "root": {
+                    "name": "Munchi Delay",
+                    "params": ["wand", "random", "feedback", "mix", "freeze", "clock", "unfreeze_mute"],
+                    "knobs": ["wand", "random", "feedback", "mix", "freeze", "clock", "unfreeze_mute"]
+                }
+            }
+        }
+    }
+}

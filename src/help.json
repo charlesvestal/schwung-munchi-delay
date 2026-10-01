@@ -1,0 +1,37 @@
+{
+  "title": "Munchi Delay",
+  "children": [
+    {
+      "title": "Overview",
+      "lines": [
+        "CHOMPI TEMPO's",
+        "Magic Wand effect.",
+        "",
+        "Wand: centre off.",
+        "Left: a delay in",
+        "time with Move,",
+        "shorter further",
+        "left. Right: the",
+        "echo melts into",
+        "reverb."
+      ]
+    },
+    {
+      "title": "Knobs",
+      "lines": [
+        "Random: octave,",
+        "reverse and pan",
+        "events.",
+        "Feedback: repeats;",
+        "past 60% new sound",
+        "ducks them.",
+        "Mix: dry to wet.",
+        "Freeze: loop what",
+        "is in the buffer.",
+        "Clock: 1/2x-2x.",
+        "Thaw: Gap mutes",
+        "briefly on unfreeze."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify version match
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          MODULE_VERSION=$(grep '"version"' src/module.json | head -1 | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
+          [ "$TAG_VERSION" = "$MODULE_VERSION" ] || { echo "tag $TAG_VERSION != module.json $MODULE_VERSION"; exit 1; }
+
+      - name: Install cross compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+
+      - name: Build
+        run: CROSS_PREFIX=aarch64-linux-gnu- ./scripts/build.sh
+
+      - name: Check the payload
+        run: |
+          test -f dist/munchi-delay-module.tar.gz
+          file dist/munchi-delay/munchi-delay.so | grep -q aarch64
+          max=$(strings dist/munchi-delay/munchi-delay.so | grep -oE 'GLIBC_[0-9]+\.[0-9]+' | sed 's/GLIBC_//' | sort -V | tail -1)
+          echo "max GLIBC: $max"
+          # Move ships glibc 2.35
+          [ "$(printf '%s\n2.35\n' "$max" | sort -V | tail -1)" = "2.35" ]
+          # no STB_GNU_UNIQUE symbols: they pin the .so until Move restarts
+          test "$(aarch64-linux-gnu-readelf -sW dist/munchi-delay/munchi-delay.so | grep -c UNIQUE)" -eq 0
+
+      - name: Create GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/munchi-delay-module.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update release.json on main
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/munchi-delay-module.tar.gz"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B main origin/main
+          printf '{\n  "version": "%s",\n  "download_url": "%s",\n  "install_path": "modules/audio_fx/munchi-delay"\n}\n' "$VERSION" "$URL" > release.json
+          git add release.json
+          git diff --cached --quiet || { git commit -m "release ${GITHUB_REF_NAME}: update release.json"; git push origin main; }
